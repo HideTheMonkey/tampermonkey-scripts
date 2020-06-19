@@ -35,7 +35,7 @@ const makeEl = (options) => {
     return el;
 };
 
-function toggleMode() {
+function togglePresentationMode() {
     const header = get('#ghx-header');
     const operations = get('#ghx-operations');
     const work = get('#ghx-work');
@@ -61,10 +61,10 @@ const toggleHelpPanel = (checked) => {
     }
 };
 
-function addCheckbox() {
+const addCheckbox = () => {
     const actionsDiv = get('header div[data-testid="atlassian-navigation--primary-actions"]');
     const outerDiv = makeEl({tag: 'div', className: 'tm-presentation'});
-    const checkBox = makeEl({tag: 'input', kind: 'checkbox', onClick: toggleMode});
+    const checkBox = makeEl({tag: 'input', kind: 'checkbox', onClick: togglePresentationMode});
     const textNode = makeEl({text: 'Presentation Mode'});
     outerDiv.append(checkBox);
     outerDiv.append(textNode);
