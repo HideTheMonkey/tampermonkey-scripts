@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Jira Board Presentation View
-// @namespace    Winterlight
+// @namespace    HideTheMonkey
 // @version      0.1
 // @description  Add presentation checkbox to jira header
 // @author       github@hidefamily.net
