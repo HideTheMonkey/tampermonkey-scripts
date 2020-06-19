@@ -4,7 +4,7 @@
 // @version      0.1
 // @description  Add presentation checkbox to jira header
 // @author       github@hidefamily.net
-// @match        *://thezebra.atlassian.net/secure/RapidBoard.jspa*
+// @match        *://*.atlassian.net/secure/RapidBoard.jspa*
 // @grant        GM_addStyle
 // ==/UserScript==
 
