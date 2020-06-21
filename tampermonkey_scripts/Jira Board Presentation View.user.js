@@ -15,6 +15,7 @@ GM_addStyle('.tm-presentation input {margin-right: 0.4em; margin-left: 1em}');
 
 const get = (sel) => document.querySelector(sel);
 const presentationCheckboxId = 'presentation-checkbox';
+const dataFullscreenFlag = 'data-useFullscreen';
 
 const docEl = document.documentElement;
 const openFullscreen = () => {
@@ -52,7 +53,7 @@ const makeEl = (options) => {
 
 const togglePresentationMode = (event) => {
   const isChecked = event.currentTarget && event.currentTarget.checked;
-  const useFullscreen = !!event.currentTarget.attributes['data-useFullscreen'];
+  const useFullscreen = !!event.currentTarget.attributes[dataFullscreenFlag];
   const header = get('#ghx-header');
   const operations = get('#ghx-operations');
   const work = get('#ghx-work');
@@ -113,7 +114,7 @@ window.addEventListener('load', (event) => {
       const button = get(`#${presentationCheckboxId}`);
       if (e.shiftKey) {
         // Hackerman: pass a flag through button attributes
-        button.setAttribute('data-useFullscreen', true);
+        button.setAttribute(dataFullscreenFlag, true);
       }
       button.click();
     }
