@@ -2,7 +2,7 @@
 // @name         Jira Board Presentation View
 // @namespace    HideTheMonkey
 // @version      0.2
-// @description  Add presentation checkbox to jira header
+// @description  Adds a Presentation Mode checkbox to Jira board header with Ctrl-P (or Ctrl-Shift-P for fullscreen) hotkey.
 // @author       Michael Hide <github@hidefamily.net>
 // @match        *://*.atlassian.net/secure/RapidBoard.jspa*
 // @grant        GM_addStyle
@@ -52,18 +52,24 @@ const makeEl = (options) => {
 
 const togglePresentationMode = (event) => {
   const isChecked = event.currentTarget && event.currentTarget.checked;
+  const useFullscreen = !!event.currentTarget.attributes['data-useFullscreen'];
   const header = get('#ghx-header');
   const operations = get('#ghx-operations');
   const work = get('#ghx-work');
   const gh = get('#gh');
   let currentHeight = gh.clientHeight;
   if (isChecked) {
-    openFullscreen();
+    if (useFullscreen) {
+      openFullscreen();
+    }
     header.setAttribute('style', 'display:none;');
     operations.setAttribute('style', 'display:none;');
     work.setAttribute('style', `height:${currentHeight}px; margin-top: 1em`);
   } else {
-    closeFullscreen();
+    if (useFullscreen) {
+      closeFullscreen();
+    }
+    event.currentTarget.removeAttribute('data-useFullscreen');
     currentHeight =
       currentHeight - header.clientHeight - operations.clientHeight;
     header.setAttribute('style', 'display:table;');
@@ -101,16 +107,15 @@ const addCheckbox = () => {
 
 window.addEventListener('load', (event) => {
   addCheckbox();
-  // Add a key binding for Ctrl-P to toggle the mode
+  // Add a key binding for Ctrl-P to toggle, and Ctrl-Shift-P to toggle fullscreen mode
   window.addEventListener('keydown', (e) => {
-    if (
-      e.keyCode == 80 &&
-      e.ctrlKey &&
-      !e.shiftKey &&
-      !e.altKey &&
-      !e.metaKey
-    ) {
-      get(`#${presentationCheckboxId}`).click();
+    if (e.keyCode == 80 && e.ctrlKey && !e.altKey && !e.metaKey) {
+      const button = get(`#${presentationCheckboxId}`);
+      if (e.shiftKey) {
+        // Hackerman: pass a flag through button attributes
+        button.setAttribute('data-useFullscreen', true);
+      }
+      button.click();
     }
   });
 });
