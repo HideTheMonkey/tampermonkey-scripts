@@ -14,6 +14,7 @@ GM_addStyle(
 GM_addStyle('.tm-presentation input {margin-right: 0.4em; margin-left: 1em}');
 
 const get = (sel) => document.querySelector(sel);
+const isNodeVisible = (el) => window.getComputedStyle(el).display !== 'none';
 const presentationCheckboxId = 'presentation-checkbox';
 const dataFullscreenFlag = 'data-useFullscreen';
 
@@ -57,15 +58,19 @@ const togglePresentationMode = (event) => {
   const header = get('#ghx-header');
   const operations = get('#ghx-operations');
   const work = get('#ghx-work');
+  const plan = get('#ghx-plan');
+  const isWorkVisible = isNodeVisible(work);
+  const contentNode = isWorkVisible ? work : plan;
   const gh = get('#gh');
   let currentHeight = gh.clientHeight;
   if (isChecked) {
     if (useFullscreen) {
       openFullscreen();
     }
-    header.setAttribute('style', 'display:none;');
-    operations.setAttribute('style', 'display:none;');
-    work.setAttribute('style', `height:${currentHeight}px; margin-top: 1em`);
+    header.style.display = 'none';
+    operations.style.display = 'none';
+    contentNode.style.height = `${currentHeight}px`;
+    contentNode.style.marginTop = '1em';
   } else {
     if (useFullscreen) {
       closeFullscreen();
@@ -73,9 +78,10 @@ const togglePresentationMode = (event) => {
     event.currentTarget.removeAttribute('data-useFullscreen');
     currentHeight =
       currentHeight - header.clientHeight - operations.clientHeight;
-    header.setAttribute('style', 'display:table;');
-    operations.setAttribute('style', 'display:block;');
-    work.setAttribute('style', `height:${currentHeight}px; margin-top: unset;`);
+    header.style.display = 'table';
+    operations.style.display = 'block';
+    contentNode.style.height = `${currentHeight}px`;
+    contentNode.style.marginTop = null;
   }
   toggleHelpPanel(isChecked);
 };
