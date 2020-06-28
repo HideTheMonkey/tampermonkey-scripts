@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Jira Board Presentation View
 // @namespace    HideTheMonkey
-// @version      0.2
+// @version      0.3
 // @description  Adds a Presentation Mode checkbox to Jira board header with Ctrl-P (or Ctrl-Shift-P for fullscreen) hotkey.
 // @author       Michael Hide <github@hidefamily.net>
 // @match        *://*.atlassian.net/secure/RapidBoard.jspa*
@@ -14,7 +14,6 @@ GM_addStyle(
 GM_addStyle('.tm-presentation input {margin-right: 0.4em; margin-left: 1em}');
 
 const get = (sel) => document.querySelector(sel);
-const isNodeVisible = (el) => window.getComputedStyle(el).display !== 'none';
 const presentationCheckboxId = 'presentation-checkbox';
 const dataFullscreenFlag = 'data-useFullscreen';
 
@@ -22,15 +21,11 @@ const docEl = document.documentElement;
 const openFullscreen = () => {
   if (docEl.requestFullscreen) {
     docEl.requestFullscreen();
-  } else if (docEl.webkitRequestFullscreen) {
-    docEl.webkitRequestFullscreen();
   }
 };
 const closeFullscreen = () => {
   if (document.exitFullscreen) {
     document.exitFullscreen();
-  } else if (document.webkitExitFullscreen) {
-    document.webkitExitFullscreen();
   }
 };
 
@@ -43,12 +38,8 @@ const makeEl = (options) => {
   }
   if (options.className) el.className = options.className;
   if (options.id) el.id = options.id;
-  if (options.tag === 'input') {
-    if (options.kind) el.type = options.kind;
-    if (options.onClick) {
-      el.onclick = options.onClick;
-    }
-  }
+  if (options.kind) el.type = options.kind;
+  if (options.onClick) el.onclick = options.onClick;
   return el;
 };
 
@@ -59,8 +50,6 @@ const togglePresentationMode = (event) => {
   const operations = get('#ghx-operations');
   const work = get('#ghx-work');
   const plan = get('#ghx-plan');
-  const isWorkVisible = isNodeVisible(work);
-  const contentNode = isWorkVisible ? work : plan;
   const gh = get('#gh');
   let currentHeight = gh.clientHeight;
   if (isChecked) {
@@ -69,8 +58,10 @@ const togglePresentationMode = (event) => {
     }
     header.style.display = 'none';
     operations.style.display = 'none';
-    contentNode.style.height = `${currentHeight}px`;
-    contentNode.style.marginTop = '1em';
+    work.style.height = `${currentHeight}px`;
+    work.style.marginTop = '1em';
+    plan.style.height = `${currentHeight}px`;
+    plan.style.marginTop = '1em';
   } else {
     if (useFullscreen) {
       closeFullscreen();
@@ -80,13 +71,15 @@ const togglePresentationMode = (event) => {
       currentHeight - header.clientHeight - operations.clientHeight;
     header.style.display = 'table';
     operations.style.display = 'block';
-    contentNode.style.height = `${currentHeight}px`;
-    contentNode.style.marginTop = null;
+    work.style.height = `${currentHeight}px`;
+    work.style.marginTop = null;
+    plan.style.height = `${currentHeight}px`;
+    plan.style.marginTop = null;
   }
-  toggleHelpPanel(isChecked);
+  collapseHelpPanel(isChecked);
 };
 
-const toggleHelpPanel = (checked) => {
+const collapseHelpPanel = (checked) => {
   const toggleButton = get(
     '#navigation-app button[class~=ak-navigation-resize-button]'
   );
