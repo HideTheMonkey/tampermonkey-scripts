@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Jira Board Presentation View
 // @namespace    HideTheMonkey
-// @version      0.4.2
+// @version      0.4.3
 // @description  Adds a Presentation Mode checkbox to Jira board header with Ctrl-P (or Ctrl-Shift-P for fullscreen) hotkey.
 // @author       Michael Hide <github@hidefamily.net>
 // @match        *://*.atlassian.net/secure/RapidBoard.jspa*
@@ -79,7 +79,7 @@ const togglePresentationMode = (event) => {
 };
 
 const collapseHelpPanel = (checked) => {
-  const toggleButton = get('button[class~=ak-navigation-resize-button]');
+  const toggleButton = get('button[data-resize-button=true]');
   // Chrome vs. Firefox
   if (
     (toggleButton.ariaExpanded === 'true' ||
