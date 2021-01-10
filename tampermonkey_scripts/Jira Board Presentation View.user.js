@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Jira Board Presentation View
 // @namespace    HideTheMonkey
-// @version      0.4.3
+// @version      0.4.4
 // @description  Adds a Presentation Mode checkbox to Jira board header with Ctrl-P (or Ctrl-Shift-P for fullscreen) hotkey.
 // @author       Michael Hide <github@hidefamily.net>
 // @match        *://*.atlassian.net/secure/RapidBoard.jspa*
@@ -91,9 +91,8 @@ const collapseHelpPanel = (checked) => {
 };
 
 const addCheckbox = () => {
-  const actionsDiv = get(
-    'header div[data-testid="atlassian-navigation--primary-actions"]'
-  );
+  const primaryNav = get('nav[aria-label="Primary Navigation"]')
+    .lastElementChild;
   const outerDiv = makeEl({ tag: 'div', className: 'tm-presentation' });
   const checkBox = makeEl({
     tag: 'input',
@@ -104,7 +103,7 @@ const addCheckbox = () => {
   const textNode = makeEl({ text: 'Presentation Mode' });
   outerDiv.append(checkBox);
   outerDiv.append(textNode);
-  actionsDiv.insertBefore(outerDiv, actionsDiv.lastElementChild);
+  primaryNav.insertBefore(outerDiv, primaryNav.lastElementChild);
 };
 
 window.addEventListener('load', (event) => {
