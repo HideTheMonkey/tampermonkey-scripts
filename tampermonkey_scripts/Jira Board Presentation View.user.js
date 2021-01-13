@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Jira Board Presentation View
 // @namespace    HideTheMonkey
-// @version      0.4.4
+// @version      0.4.5
 // @description  Adds a Presentation Mode checkbox to Jira board header with Ctrl-P (or Ctrl-Shift-P for fullscreen) hotkey.
 // @author       Michael Hide <github@hidefamily.net>
 // @match        *://*.atlassian.net/secure/RapidBoard.jspa*
@@ -49,8 +49,8 @@ const togglePresentationMode = (event) => {
   const operations = get('#ghx-operations');
   const work = get('#ghx-work');
   const plan = get('#ghx-plan');
-  const gh = get('#gh');
-  let currentHeight = gh.clientHeight;
+  const contentDiv = get('#ghx-pool') || get('#ghx-backlog') || {};
+  let currentHeight = get('#gh').clientHeight;
   if (isChecked) {
     if (useFullscreen) {
       openFullscreen();
@@ -61,6 +61,7 @@ const togglePresentationMode = (event) => {
     work.style.marginTop = '1em';
     plan.style.height = `${currentHeight}px`;
     plan.style.marginTop = '1em';
+    contentDiv.scrollTop = 0;
   } else {
     if (useFullscreen) {
       closeFullscreen();
