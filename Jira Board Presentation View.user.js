@@ -4,8 +4,8 @@
 // @version      0.4.7
 // @description  Adds a Presentation Mode checkbox to Jira board header with Ctrl-P (or Ctrl-Shift-P for fullscreen) hotkey.
 // @author       Michael Hide
-// @downloadURL  https://github.com/HideTheMonkey/tampermonkey-scripts/raw/master/tampermonkey_scripts/Jira%20Board%20Presentation%20View.user.js
-// @updateURL    https://github.com/HideTheMonkey/tampermonkey-scripts/raw/master/tampermonkey_scripts/Jira%20Board%20Presentation%20View.user.js
+// @downloadURL  https://github.com/HideTheMonkey/tampermonkey-scripts/raw/main/tampermonkey_scripts/Jira%20Board%20Presentation%20View.user.js
+// @updateURL    https://github.com/HideTheMonkey/tampermonkey-scripts/raw/main/tampermonkey_scripts/Jira%20Board%20Presentation%20View.user.js
 // @match        *://*.atlassian.net/jira/software/c/projects/*
 // @match        *://*.atlassian.net/secure/RapidBoard.jspa*
 // @grant        GM_addStyle
