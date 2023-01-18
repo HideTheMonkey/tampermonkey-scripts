@@ -95,7 +95,7 @@ const collapseHelpPanel = (checked) => {
 };
 
 const addCheckbox = () => {
-  const primaryNav = get('nav[aria-label="Primary Navigation"]')
+  const primaryNav = get('nav[aria-label="Primary"]')
     .lastElementChild;
   const outerDiv = makeEl({ tag: 'div', className: 'tm-presentation' });
   const checkBox = makeEl({
