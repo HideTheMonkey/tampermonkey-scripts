@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Jira Board Presentation View
 // @namespace    HideTheMonkey
-// @version      0.4.7
+// @version      0.4.8
 // @description  Adds a Presentation Mode checkbox to Jira board header with Ctrl-P (or Ctrl-Shift-P for fullscreen) hotkey.
 // @author       Michael Hide
 // @downloadURL  https://github.com/HideTheMonkey/tampermonkey-scripts/raw/main/tampermonkey_scripts/Jira%20Board%20Presentation%20View.user.js
